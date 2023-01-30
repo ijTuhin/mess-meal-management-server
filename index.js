@@ -18,10 +18,19 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 async function run() {
   try{
-    const userCollection = client.db("messMealDB").collection("user"); // taking database & collection
-    const user = {emailId: "something", password: "something"}; // creating data 
-    const result = await userCollection.insertOne(user) // inserting data into the collection
-    console.log(result)
+    const hallStudentCollection = client.db("messMealDB").collection("hallStudent"); // taking database & collection
+    const hallGuestCollection = client.db("messMealDB").collection("hallGuest"); // taking database & collection
+
+    app.post('/non-residence-student-registration', async (req,res) => {
+      const hallStudent = req.body;
+      const result = await hallStudentCollection.insertOne(hallStudent) // inserting/pushing registration data into the database collection
+      res.send(hallStudent)
+    })
+    app.post('/non-residence-guest-registration', async (req,res) => {
+      const hallGuest = req.body;
+      const result = await hallGuestCollection.insertOne(hallGuest) // inserting/pushing registration data into the database collection
+      res.send(hallGuest)
+    })
   }
   finally{
     // here we can put code to end the connection.
