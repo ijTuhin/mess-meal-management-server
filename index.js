@@ -18,13 +18,13 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 async function run() {
   try{
-    const hallStudentCollection = client.db("messMealDB").collection("hallStudent"); // taking database & collection
+    const userCollection = client.db("messMealDB").collection("user"); // taking database & collection
     const paymentsCollection = client.db("messMealDB").collection("payments"); // taking database & collection
 
-    app.post('/non-residence-student-registration', async (req,res) => {
-      const hallStudent = req.body;
-      const result = await hallStudentCollection.insertOne(hallStudent) // inserting/pushing registration data into the database collection
-      res.send(hallStudent)
+    app.post('/user', async (req,res) => {
+      const user = req.body;
+      const result = await userCollection.insertOne(user) // inserting/pushing registration data into the database collection
+      res.send(user)
     })
 
     app.get('/payments', async (req, res) => {
